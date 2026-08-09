@@ -3,3 +3,4 @@ _qr/
 *.bak
 .DS_Store
 Thumbs.db
+tools/
