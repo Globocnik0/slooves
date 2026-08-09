@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>slooves - ovseni napitek</title>
+<meta name="description" content="Spletna stran za ovseni napitek slooves je v izgradnji.">
+<link rel="canonical" href="https://slooves.si/">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sl_SI">
+<meta property="og:site_name" content="slooves">
+<meta property="og:title" content="slooves - ovseni napitek">
+<meta property="og:description" content="Spletna stran za ovseni napitek slooves je v izgradnji.">
+<meta property="og:url" content="https://slooves.si/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --cream: #f6f1e6;
+    --cream-deep: #ece3d2;
+    --oat: #c9a86a;
+    --ink: #2e2a24;
+    --muted: #6f675b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    display: grid;
+    place-items: center;
+    padding: 2rem 1.5rem;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #fffdf8 0%, var(--cream) 55%, var(--cream-deep) 100%);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+  }
+
+  main {
+    max-width: 34rem;
+  }
+
+  .mark {
+    display: block;
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 2rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(3rem, 13vw, 5.25rem);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+
+  .tagline {
+    margin: 0.9rem 0 0;
+    font-size: clamp(0.78rem, 2.4vw, 0.92rem);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--oat);
+  }
+
+  .rule {
+    width: 44px;
+    height: 2px;
+    margin: 2.4rem auto;
+    border: 0;
+    background: var(--oat);
+    opacity: 0.55;
+  }
+
+  p.notice {
+    margin: 0;
+    font-size: clamp(1.02rem, 3.2vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 1.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  @media (max-height: 520px) {
+    footer { position: static; margin-top: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <svg class="mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+    <path d="M32 58V22" stroke="#c9a86a" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M32 30c-8 0-13-5-13-12 7 0 13 5 13 12Z" fill="#c9a86a" opacity=".38"/>
+    <path d="M32 30c8 0 13-5 13-12-7 0-13 5-13 12Z" fill="#c9a86a" opacity=".62"/>
+    <path d="M32 43c-8 0-13-5-13-12 7 0 13 5 13 12Z" fill="#c9a86a" opacity=".38"/>
+    <path d="M32 43c8 0 13-5 13-12-7 0-13 5-13 12Z" fill="#c9a86a" opacity=".62"/>
+  </svg>
+
+  <h1>slooves</h1>
+  <p class="tagline">Ovseni napitek</p>
+
+  <hr class="rule">
+
+  <p class="notice">Spletna stran za ovseni napitek slooves je v izgradnji.</p>
+</main>
+
+<footer>slooves.si</footer>
+
+</body>
+</html>
