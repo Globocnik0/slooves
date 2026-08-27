@@ -4,125 +4,387 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>slooves - ovseni napitek</title>
-<meta name="description" content="Spletna stran za ovseni napitek slooves je v izgradnji.">
+<meta name="description" content="Ovseni napitek iz polnozrnatega slovenskega ovsa. Voda, oves, ščepec morske soli — nič drugega.">
 <link rel="canonical" href="https://slooves.si/">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="sl_SI">
 <meta property="og:site_name" content="slooves">
 <meta property="og:title" content="slooves - ovseni napitek">
-<meta property="og:description" content="Spletna stran za ovseni napitek slooves je v izgradnji.">
+<meta property="og:description" content="Ovseni napitek iz polnozrnatega slovenskega ovsa.">
 <meta property="og:url" content="https://slooves.si/">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/mark.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&family=Archivo:wdth,wght@75,300;75,400;75,500&display=swap" rel="stylesheet">
+
 <style>
+  /* ------------------------------------------------------------------
+     Palette and type come from the CGP (Forming Brands, 2026):
+     colours from "barve & barvni zapisi", fonts from "tipografije in fonti".
+     ------------------------------------------------------------------ */
   :root {
-    --cream: #f6f1e6;
-    --cream-deep: #ece3d2;
-    --oat: #c9a86a;
-    --ink: #2e2a24;
-    --muted: #6f675b;
+    --green: #165600;   /* gozdno zelena    PANTONE 2427 C */
+    --oat:   #F09E03;   /* kadmijevo rumena PANTONE 2012 C */
+    --cream: #FFF2E2;   /* mering bela      PANTONE P 7-1 C */
+    --olive: #898067;   /* olivno rjava     PANTONE 6207 C */
+    --red:   #BB2832;   /* nagelj - ni v CGP paleti */
+
+    /* Multiple of 8 so the strip is a whole number of device pixels at every
+       common devicePixelRatio. At 34px it was 42.5 device pixels and the two
+       strips antialiased differently - the bottom one came out lighter. */
+    --border-h: 32px;
+    --border-w: 128px;  /* tile is almost exactly 4:1 (638.37 x 159.70pt) */
+
+    --measure: 34rem;
   }
 
   * { box-sizing: border-box; }
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+  html { scroll-behavior: smooth; }
 
   body {
-    display: grid;
-    place-items: center;
-    padding: 2rem 1.5rem;
-    background:
-      radial-gradient(120% 90% at 50% 0%, #fffdf8 0%, var(--cream) 55%, var(--cream-deep) 100%);
-    color: var(--ink);
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    background: var(--cream);
+    color: var(--green);
+    font-family: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-variation-settings: "wdth" 75;
+    font-weight: 400;
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .nav a, .eyebrow {
+    font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* CGP: naslovi vedno v velikih tiskanih črkah */
+  h1, h2 { text-transform: uppercase; font-weight: 800; letter-spacing: 0.01em; }
+  h2 { font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.4rem); margin: 0 0 1.2rem; }
+  h3 { font-weight: 600; font-size: 1.05rem; margin: 0 0 0.35rem;
+       text-transform: uppercase; letter-spacing: 0.05em; }
+
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------------- folk border ---------------- */
+  .strip {
+    height: var(--border-h);
+    background-image: url("images/border.svg");
+    background-repeat: repeat-x;
+    background-position: left center;
+    /* Explicit integer size, not "auto 100%": an auto width came out
+       fractional and every repeat started on a different subpixel. */
+    background-size: var(--border-w) var(--border-h);
+  }
+
+  /* ---------------- nav ---------------- */
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 0.6rem clamp(1rem, 4vw, 3rem);
+    /* Solid, not translucent: over the dark green bands a see-through bar went
+       muddy and the text underneath ghosted through it. */
+    background: var(--cream);
+    border-bottom: 1px solid color-mix(in srgb, var(--green) 14%, transparent);
+  }
+  .nav img { height: 26px; width: auto; }
+  .nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0 0 0 auto; padding: 0;
+            flex-wrap: wrap; }
+  .nav a { color: var(--green); text-decoration: none; font-weight: 600;
+           font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .nav a:hover, .nav a:focus-visible { color: var(--oat); }
+
+  /* ---------------- layout ---------------- */
+  section { padding: clamp(3rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 3rem); }
+  .wrap { max-width: 62rem; margin: 0 auto; }
+  .narrow { max-width: var(--measure); }
+
+  .band--green { background: var(--green); color: var(--cream); }
+  .band--green h2, .band--green h3 { color: var(--cream); }
+
+  .eyebrow {
+    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--olive); margin: 0 0 0.6rem;
+  }
+  .band--green .eyebrow { color: var(--oat); }
+
+  /* ---------------- hero ---------------- */
+  .hero { text-align: center; padding-block: clamp(3.5rem, 9vw, 7rem); }
+  .hero img.logo { display: block; width: min(26rem, 84vw); height: auto; margin: 0 auto; }
+  .hero h1 {
+    font-size: clamp(1.35rem, 0.9rem + 2.2vw, 2.3rem);
+    margin: 2.2rem 0 0.8rem; line-height: 1.25;
+  }
+  .hero .claim { font-size: 1.12rem; color: var(--olive); max-width: 32rem;
+                 margin-inline: auto; }
+
+  /* ---------------- ingredients ---------------- */
+  .three { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr);
+           margin: 0 0 2.5rem; }
+  .ing {
+    background: #fff; border-radius: 14px; padding: 1.6rem 1rem;
     text-align: center;
+    border: 1px solid color-mix(in srgb, var(--green) 14%, transparent);
   }
+  .ing b { display: block; font-family: "Raleway", sans-serif; font-weight: 800;
+           text-transform: uppercase; font-size: 1.05rem; letter-spacing: 0.02em; }
+  .ing span { font-size: 0.86rem; color: var(--olive); }
 
-  main {
-    max-width: 34rem;
+  .badges { display: grid; gap: 1.25rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; }
+  .badges figure { margin: 0; text-align: center; }
+  .badges img { width: 100%; max-width: 118px; height: auto; }
+  .badges figcaption { font-size: 0.76rem; color: var(--olive); margin-top: 0.35rem;
+                       text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* ---------------- decorative accents ---------------- */
+  .accent { display: block; height: 44px; width: auto; margin: 0 auto 1.5rem; }
+
+  /* ---------------- placeholders ---------------- */
+  /* Marked clearly so an unwritten section reads as deliberate, not broken.
+     Each one is replaced with real copy from the family. */
+  .todo {
+    border: 1px dashed color-mix(in srgb, currentColor 35%, transparent);
+    border-radius: 12px;
+    padding: 1.5rem 1.4rem;
+    color: inherit;
+    opacity: 0.75;
+    font-size: 0.95rem;
   }
+  .todo p:first-child { font-weight: 500; }
+  .todo ul { margin: 0.6rem 0 0; padding-left: 1.1rem; }
+  .todo li { margin: 0.2rem 0; }
 
-  .mark {
-    display: block;
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 2rem;
-  }
+  .steps { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr);
+           margin-top: 1.6rem; }
+  .step { border-top: 3px solid var(--oat); padding-top: 0.8rem; }
+  .step b { display: block; font-family: "Raleway", sans-serif; font-weight: 800;
+            font-size: 1.6rem; line-height: 1; color: var(--oat); }
+  .step span { font-size: 0.9rem; }
 
-  h1 {
-    margin: 0;
-    font-size: clamp(3rem, 13vw, 5.25rem);
-    font-weight: 600;
-    letter-spacing: -0.045em;
-    line-height: 1;
-  }
-
-  .tagline {
-    margin: 0.9rem 0 0;
-    font-size: clamp(0.78rem, 2.4vw, 0.92rem);
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--oat);
-  }
-
-  .rule {
-    width: 44px;
-    height: 2px;
-    margin: 2.4rem auto;
-    border: 0;
-    background: var(--oat);
-    opacity: 0.55;
-  }
-
-  p.notice {
-    margin: 0;
-    font-size: clamp(1.02rem, 3.2vw, 1.2rem);
-    line-height: 1.6;
-    color: var(--muted);
-  }
-
+  /* ---------------- footer ---------------- */
   footer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 1.4rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-    opacity: 0.7;
+    padding: 2.5rem clamp(1.25rem, 5vw, 3rem);
+    text-align: center; font-size: 0.84rem; color: var(--olive);
+  }
+  footer .legal { max-width: 34rem; margin: 0 auto 0.8rem; }
+  footer a { color: inherit; }
+
+  @media (max-width: 46rem) {
+    .three { grid-template-columns: 1fr; }
+    .badges { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .steps { grid-template-columns: 1fr 1fr; }
+
+    /* Keep the sticky bar one line tall: let the links scroll sideways rather
+       than wrap onto three rows and eat the screen. */
+    .nav { flex-wrap: nowrap; gap: 0.85rem; }
+    .nav ul { flex-wrap: nowrap; overflow-x: auto; gap: 0.9rem;
+              scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .nav ul::-webkit-scrollbar { display: none; }
+    .nav li { flex: none; }
+    .nav a { font-size: 0.72rem; white-space: nowrap; }
+  }
+  @media (max-width: 30rem) {
+    :root { --border-h: 24px; --border-w: 96px; }
+    .nav img { height: 22px; }
   }
 
-  @media (max-height: 520px) {
-    footer { position: static; margin-top: 2.5rem; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
 <body>
 
-<main>
-  <svg class="mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-    <path d="M32 58V22" stroke="#c9a86a" stroke-width="2.6" stroke-linecap="round"/>
-    <path d="M32 30c-8 0-13-5-13-12 7 0 13 5 13 12Z" fill="#c9a86a" opacity=".38"/>
-    <path d="M32 30c8 0 13-5 13-12-7 0-13 5-13 12Z" fill="#c9a86a" opacity=".62"/>
-    <path d="M32 43c-8 0-13-5-13-12 7 0 13 5 13 12Z" fill="#c9a86a" opacity=".38"/>
-    <path d="M32 43c8 0 13-5 13-12-7 0-13 5-13 12Z" fill="#c9a86a" opacity=".62"/>
-  </svg>
+<div class="strip" role="presentation"></div>
 
-  <h1>slooves</h1>
-  <p class="tagline">Ovseni napitek</p>
+<nav class="nav">
+  <a href="#vrh" aria-label="slooves"><img src="images/logo.svg" alt="slooves"></a>
+  <ul>
+    <li><a href="#sestavine">Kaj je notri</a></li>
+    <li><a href="#zgodba">Kdo smo</a></li>
+    <li><a href="#postopek">Od njive do kozarca</a></li>
+    <li><a href="#kje">Kje kupiti</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
 
-  <hr class="rule">
+<header class="hero" id="vrh">
+  <img class="logo" src="images/logo-slogan.svg" alt="slooves - ovseni napitek">
+  <h1>Polnozrnati oves iz slovenskih polj</h1>
+  <p class="claim">Doma v vsakem požirku.</p>
+</header>
 
-  <p class="notice">Spletna stran za ovseni napitek slooves je v izgradnji.</p>
-</main>
+<div class="strip" role="presentation"></div>
 
-<footer>slooves.si</footer>
+<!-- ---------------------------------------------------------------
+     Sestavine: the only claims on the page that are already approved,
+     taken verbatim from the carton. Everything else waits for copy.
+     --------------------------------------------------------------- -->
+<section id="sestavine">
+  <div class="wrap">
+    <p class="eyebrow">Sestavine</p>
+    <h2>Kaj je notri</h2>
+
+    <div class="three">
+      <div class="ing"><b>Voda</b><span>in nič več</span></div>
+      <div class="ing"><b>Oves</b><span>polnozrnati, slovenski</span></div>
+      <div class="ing"><b>Morska sol</b><span>ščepec, slovenska</span></div>
+    </div>
+
+    <div class="badges">
+      <figure>
+        <img src="images/badge-vegansko.svg" alt="100 % vegansko">
+        <figcaption>100 % vegansko</figcaption>
+      </figure>
+      <figure>
+        <img src="images/badge-brez-laktoze.svg" alt="Naravno brez laktoze">
+        <figcaption>Brez laktoze</figcaption>
+      </figure>
+      <figure>
+        <img src="images/badge-brez-sladkorjev.svg" alt="Brez dodanih sladkorjev">
+        <figcaption>Brez dodanih sladkorjev</figcaption>
+      </figure>
+      <figure>
+        <img src="images/badge-brez-dodatkov.svg" alt="Brez umetnih dodatkov in olj">
+        <figcaption>Brez dodatkov in olj</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="strip" role="presentation"></div>
+
+<section id="zgodba" class="band--green">
+  <div class="wrap narrow">
+    <p class="eyebrow">Družinska kmetija</p>
+    <h2>Kdo smo</h2>
+    <div class="todo">
+      <p>Besedilo sledi.</p>
+      <ul>
+        <li>koliko generacij in kaj še kmetija prideluje</li>
+        <li>kdo je kdo v družini in kaj kdo dela</li>
+        <li>zakaj ste se lotili ravno ovsenega napitka</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="postopek">
+  <div class="wrap">
+    <img class="accent" src="images/leaves.svg" alt="" role="presentation">
+    <p class="eyebrow">Postopek</p>
+    <h2>Od njive do kozarca</h2>
+    <div class="narrow">
+      <div class="todo">
+        <p>Besedilo sledi - koraki od setve do polnjenja.</p>
+        <ul>
+          <li>ali se oves predela na kmetiji ali drugje in kje</li>
+          <li>kaj se zgodi v vsakem koraku, na kratko</li>
+        </ul>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><b>01</b><span>Njiva</span></div>
+      <div class="step"><b>02</b><span>Žetev</span></div>
+      <div class="step"><b>03</b><span>Predelava</span></div>
+      <div class="step"><b>04</b><span>Polnjenje</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="oves" class="band--green">
+  <div class="wrap narrow">
+    <p class="eyebrow">Poreklo</p>
+    <h2>Zakaj slovenski oves</h2>
+    <div class="todo">
+      <p>Besedilo sledi - kratke transportne poti, podpora slovenskim kmetom,
+         sledljivost od njive do kozarca.</p>
+    </div>
+  </div>
+</section>
+
+<section id="uporaba">
+  <div class="wrap">
+    <img class="accent" src="images/flowers.svg" alt="" role="presentation">
+    <p class="eyebrow">Uporaba</p>
+    <h2>Kako ga uporabiti</h2>
+    <div class="narrow">
+      <div class="todo">
+        <p>Besedilo sledi - preprosto, brez receptov.</p>
+        <ul>
+          <li>v kavi</li>
+          <li>v kosmičih in ovseni kaši</li>
+          <li>pri peki</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kje">
+  <div class="wrap narrow">
+    <p class="eyebrow">Prodajna mesta</p>
+    <h2>Kje kupiti</h2>
+    <div class="todo">
+      <p>Besedilo sledi - seznam trgovin in datum, od kdaj je napitek na voljo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="band--green">
+  <div class="wrap narrow">
+    <p class="eyebrow">Pišite nam</p>
+    <h2>Kontakt</h2>
+    <div class="todo">
+      <p>Sledi - e-naslov, telefon in povezavi na Instagram in TikTok.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="legal">
+    Proizvaja in polni: Jakob Globočnik — nosilec dopolnilne dejavnosti na kmetiji,
+    Letališka ulica 7, Voglje, 4208 Šenčur
+  </p>
+  <p>slooves.si</p>
+</footer>
+
+<div class="strip" role="presentation"></div>
+
+<script>
+/* The folk strip is a vector tiled at 32px tall. If a strip happens to start on
+   a fractional device pixel, the browser resamples it at a different subpixel
+   phase and its green reads lighter or darker than the other strips - the thin
+   rules in the artwork are well under one device pixel, so they smear first.
+   Section heights depend on text and on vw padding, so those offsets land
+   wherever they land. Nudge each strip down by the leftover fraction so every
+   one starts on a whole device pixel and they all rasterise identically. */
+(function () {
+  var strips = document.querySelectorAll('.strip');
+
+  function snap() {
+    var dpr = window.devicePixelRatio || 1;
+    for (var i = 0; i < strips.length; i++) {
+      var el = strips[i];
+      el.style.transform = '';
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      var frac = (top * dpr) % 1;
+      if (frac) {
+        el.style.transform = 'translateY(' + ((1 - frac) / dpr).toFixed(4) + 'px)';
+      }
+    }
+  }
+
+  snap();
+  addEventListener('resize', snap);
+  // Web fonts change section heights when they swap in.
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(snap); }
+})();
+</script>
 
 </body>
 </html>
