@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>slooves - ovseni napitek</title>
+<meta name="description" content="Ovseni napitek iz slovenskega ovsa. Sestavine: voda, polnozrnat oves in piranska sol.">
+<link rel="canonical" href="https://slooves.si/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sl_SI">
+<meta property="og:site_name" content="slooves">
+<meta property="og:title" content="slooves - ovseni napitek">
+<meta property="og:description" content="Ovseni napitek iz slovenskega ovsa. Sestavine: voda, polnozrnat oves in piranska sol.">
+<meta property="og:url" content="https://slooves.si/">
+<link rel="icon" href="images/mark.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&family=Archivo:wdth,wght@75,300;75,400;75,500&display=swap" rel="stylesheet">
+
+<style>
+  /* ------------------------------------------------------------------
+     Palette and type come from the CGP (Forming Brands, 2026):
+     colours from "barve & barvni zapisi", fonts from "tipografije in fonti".
+     ------------------------------------------------------------------ */
+  :root {
+    --green: #165600;   /* gozdno zelena    PANTONE 2427 C */
+    --oat:   #F09E03;   /* kadmijevo rumena PANTONE 2012 C */
+    --cream: #FFF2E2;   /* mering bela      PANTONE P 7-1 C */
+    --olive: #898067;   /* olivno rjava     PANTONE 6207 C */
+    --red:   #BB2832;   /* nagelj - ni v CGP paleti */
+
+    /* Page ground: the beige of the printed carton
+       (2026-9-9_SLOOVES_adapted___PRESS.pdf), not the CGP's lighter cream. */
+    --bg: #EED9B2;
+    /* CGP olive is too light for small text on that beige (about 2.9:1), so
+       small olive text uses a darker shade of it. */
+    --olive-text: #5C5540;
+
+    /* Fallback until the script below fits the strip to the screen width. */
+    --strip-h: 64px;
+
+    --measure: 34rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--green);
+    font-family: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-variation-settings: "wdth" 75;
+    font-weight: 400;
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .eyebrow {
+    font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* CGP: naslovi vedno v velikih tiskanih črkah */
+  h1, h2 { text-transform: uppercase; font-weight: 800; letter-spacing: 0.01em; }
+  h2 { font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.4rem); margin: 0 0 1.2rem; }
+  h3 { font-weight: 600; font-size: 1.05rem; margin: 0 0 0.35rem;
+       text-transform: uppercase; letter-spacing: 0.05em; }
+
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------------- folk border ---------------- */
+  /* One tile is a carnation pair plus a linden-leaf pair (almost exactly 4:1).
+     The script at the bottom sets the height and horizontal offset so each
+     strip shows whole motifs and ends on the same motif at both edges. */
+  .strip {
+    position: relative;
+    height: var(--strip-h);
+    /* The four green rules are redrawn once across the full width on top of the
+       tiles: where two tiles meet, the tile's own rules left a faint seam. Stops
+       are the rules' positions in the tile, as % of its height. */
+    background-image:
+      linear-gradient(to bottom,
+        transparent 0.33%, var(--green) 0.33% 3.12%, transparent 3.12% 4.33%,
+        var(--green) 4.33% 5.73%, transparent 5.73% 94.29%,
+        var(--green) 94.29% 95.69%, transparent 95.69% 96.9%,
+        var(--green) 96.9% 99.69%, transparent 99.69%),
+      url("images/border.svg");
+    background-repeat: no-repeat, repeat-x;
+    background-position: 0 0, center;
+    background-size: 100% 100%, calc(var(--strip-h) * 4) var(--strip-h);
+  }
+  /* End caps: the cream space at each end of a strip is filled with the page
+     colour between the green rules, so no sliver of the next motif shows. */
+  .strip::before, .strip::after {
+    content: ""; position: absolute; top: 6.5%; bottom: 6.5%;
+    width: var(--cap, 0px); background: var(--bg);
+  }
+  .strip::before { left: 0; }
+  .strip::after { right: 0; }
+
+  /* ---------------- layout ---------------- */
+  section { padding: clamp(3rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 3rem); }
+  .wrap { max-width: 62rem; margin: 0 auto; }
+  .narrow { max-width: var(--measure); }
+
+  .band--green { background: var(--green); color: var(--cream); }
+  .band--green h2, .band--green h3 { color: var(--cream); }
+
+  .eyebrow {
+    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--olive-text); margin: 0 0 0.6rem;
+  }
+  .band--green .eyebrow { color: var(--oat); }
+
+  /* ---------------- hero ---------------- */
+  /* Fills the first screen between the two strips: logo and slogan only. */
+  .hero {
+    min-height: calc(100vh - 2 * var(--strip-h));
+    min-height: calc(100svh - 2 * var(--strip-h));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: clamp(1.3rem, 2.5vw, 2rem);
+    padding: 3rem 1rem; text-align: center;
+  }
+  .hero img.logo { display: block; width: min(600px, 80vw); height: auto; }
+  .hero h1 {
+    margin: 0; font-weight: 600; line-height: 1.4;
+    font-size: clamp(0.8rem, 0.7rem + 0.35vw, 1rem); letter-spacing: 0.26em;
+    color: var(--olive-text);
+  }
+
+  /* ---------------- ingredients ---------------- */
+  .three { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr);
+           margin: 0 0 2.5rem; }
+  .ing {
+    background: #fff; border-radius: 14px; padding: 1.6rem 1rem;
+    text-align: center;
+    border: 1px solid color-mix(in srgb, var(--green) 14%, transparent);
+  }
+  .ing b { display: block; font-family: "Raleway", sans-serif; font-weight: 800;
+           text-transform: uppercase; font-size: 1.05rem; letter-spacing: 0.02em; }
+  .ing span { font-size: 0.86rem; color: var(--olive-text); }
+
+  .badges { display: grid; gap: 1.25rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; }
+  .badges figure { margin: 0; text-align: center; }
+  .badges img { width: 100%; max-width: 118px; height: auto; }
+  .badges figcaption { font-size: 0.76rem; color: var(--olive-text); margin-top: 0.35rem;
+                       text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* ---------------- decorative accents ---------------- */
+  .accent { display: block; height: 44px; width: auto; margin: 0 auto 1.5rem; }
+
+  /* ---------------- placeholders ---------------- */
+  /* Marked clearly so an unwritten section reads as deliberate, not broken.
+     Each one is replaced with real copy from the family. */
+  .todo {
+    border: 1px dashed color-mix(in srgb, currentColor 35%, transparent);
+    border-radius: 12px;
+    padding: 1.5rem 1.4rem;
+    color: inherit;
+    opacity: 0.75;
+    font-size: 0.95rem;
+  }
+  .todo p:first-child { font-weight: 500; }
+  .todo ul { margin: 0.6rem 0 0; padding-left: 1.1rem; }
+  .todo li { margin: 0.2rem 0; }
+
+  .steps { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr);
+           margin-top: 1.6rem; }
+  .step { border-top: 3px solid var(--oat); padding-top: 0.8rem; }
+  .step b { display: block; font-family: "Raleway", sans-serif; font-weight: 800;
+            font-size: 1.6rem; line-height: 1; color: var(--oat); }
+  .step span { display: block; font-family: "Raleway", sans-serif; font-weight: 600;
+               text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.95rem;
+               margin-top: 0.5rem; }
+  .step p { font-size: 0.9rem; margin-top: 0.5rem; }
+
+  .lead { font-size: 1.15rem; font-weight: 500; }
+  .closing { text-align: center; font-family: "Raleway", sans-serif; font-weight: 600;
+             color: var(--olive-text); margin-top: 2.5rem; }
+
+  /* ---------------- contact ---------------- */
+  .mail { color: var(--cream); font-family: "Raleway", sans-serif; font-weight: 800;
+          font-size: clamp(1.3rem, 1rem + 1.4vw, 1.9rem); text-decoration-color: var(--oat);
+          text-underline-offset: 0.2em; text-decoration-thickness: 2px; }
+  .mail:hover, .mail:focus-visible { color: var(--oat); }
+
+  .social { display: flex; flex-wrap: wrap; gap: 0.75rem; list-style: none;
+            margin: 1.8rem 0 0; padding: 0; }
+  .social a {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    padding: 0.6rem 1.1rem; border-radius: 999px;
+    border: 1.5px solid color-mix(in srgb, var(--cream) 55%, transparent);
+    color: var(--cream); text-decoration: none; cursor: pointer;
+    font-family: "Raleway", sans-serif; font-weight: 600; font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .social a:hover, .social a:focus-visible { background: var(--cream); color: var(--green);
+                                              border-color: var(--cream); }
+  .social svg { width: 18px; height: 18px; flex: none; }
+
+  /* ---------------- footer ---------------- */
+  footer {
+    padding: 2.5rem clamp(1.25rem, 5vw, 3rem);
+    text-align: center; font-size: 0.84rem; color: var(--olive-text);
+  }
+  footer .legal { max-width: 34rem; margin: 0 auto 0.8rem; }
+  footer a { color: inherit; }
+
+  @media (max-width: 46rem) {
+    .three { grid-template-columns: 1fr; }
+    .badges { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .steps { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- As on the carton: one strip framed by leaves, the next by carnations. -->
+<div class="strip" data-ends="listi" role="presentation"></div>
+
+<header class="hero" id="vrh">
+  <img class="logo" src="images/logo-slogan.svg" alt="slooves - ovseni napitek">
+  <h1>Oves iz slovenskih polj</h1>
+</header>
+
+<div class="strip" data-ends="roze" role="presentation"></div>
+
+<!-- ---------------------------------------------------------------
+     Sestavine: taken verbatim from the carton. The other sections are
+     the family's own copy, verbatim - only Kontakt still waits for it.
+     --------------------------------------------------------------- -->
+<section id="sestavine">
+  <div class="wrap">
+    <p class="eyebrow">Sestavine</p>
+    <h2>Kaj je notri</h2>
+
+    <div class="three">
+      <div class="ing"><b>Voda</b><span>in nič več</span></div>
+      <div class="ing"><b>Oves</b><span>polnozrnati, slovenski</span></div>
+      <div class="ing"><b>Piranska sol</b><span>ščepec</span></div>
+    </div>
+
+    <div class="badges">
+      <figure>
+        <img src="images/badge-vegansko.svg" alt="100 % vegansko">
+        <figcaption>100 % vegansko</figcaption>
+      </figure>
+      <figure>
+        <img src="images/badge-brez-laktoze.svg" alt="Naravno brez laktoze">
+        <figcaption>Brez laktoze</figcaption>
+      </figure>
+      <figure>
+        <img src="images/badge-brez-sladkorjev.svg" alt="Brez dodanih sladkorjev">
+        <figcaption>Brez dodanih sladkorjev</figcaption>
+      </figure>
+      <figure>
+        <img src="images/badge-brez-dodatkov.svg" alt="Brez umetnih dodatkov in olj">
+        <figcaption>Brez dodatkov in olj</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="strip" data-ends="listi" role="presentation"></div>
+
+<section id="zgodba" class="band--green">
+  <div class="wrap narrow">
+    <p class="eyebrow">Družinska kmetija</p>
+    <h2>Kdo smo</h2>
+    <p>Smo družina Globočnik in naša kmetija je v družinski lasti že od leta 1929. Kmetovanje je del naše družine že več generacij, delo na kmetiji pa nam nikoli ni bilo samo služba, ampak način življenja.</p>
+    <p>Pred dobrimi tridesetimi leti sta kmetijo prevzela starša Aleš in Mili. Tudi sama sta vedno iskala načine, kako kmetijo ohraniti in ji zagotoviti prihodnost. Ena glavnih dejavnosti je bila dolga leta reja prašičev, v kateri pa nismo več videli prihodnosti.</p>
+    <p>Takrat je na vrsto prišel sin Jakob. Že od nekdaj je vedel, da želi ostati doma na kmetiji. Ko smo iskali novo dejavnost, smo želeli najti nekaj, kar bi lahko razvijali doma, na dolgi rok, in pri tem ostali povezani s kmetijstvom.</p>
+    <p>Tako smo prišli do ovsa in rastlinskih napitkov.</p>
+    <p>Oves je domača, tradicionalna poljščina in hkrati odlična osnova za napitek, po katerem je povpraševanja vse več. Želeli smo narediti nekaj svojega – iz slovenskih surovin in na način, ki nam je blizu.</p>
+    <p>Pot do sem ni bila kratka. Veliko smo se morali naučiti, marsikaj preizkusiti in veliko stvari narediti prvič. Danes pa v nekdanjih hlevih ne redimo več prašičev. Tam nastaja Slooves, naš ovseni napitek.</p>
+    <p>Še vedno smo kmetija. Še vedno delamo z zemljo in živimo z njo. Le ena nova stvar je prišla na naše dvorišče.</p>
+  </div>
+</section>
+
+<section id="postopek">
+  <div class="wrap">
+    <img class="accent" src="images/leaves.svg" alt="" role="presentation">
+    <p class="eyebrow">Postopek</p>
+    <h2>Od njive do kozarca</h2>
+    <div class="narrow">
+      <p>Zgodba se začne na naših njivah. Oves je tradicionalna slovenska rastlina, ki jo pridelujemo tudi sami in prav naš domači oves je tisti, ki smo ga želeli najprej spremeniti v ovseni napitek. Če in ko ga bomo potrebovali več, si sodelovanje želimo razširiti tudi na kmete v okolici.</p>
+      <p>Pomembno nam je, da vemo, od kod prihaja surovina, in da ostane čim bližje domu. Zato pri ovsu ne bomo sklepali kompromisov – Slooves bo narejen iz 100 % slovenskega ovsa.</p>
+      <p>Predelava in polnjenje potekata na naši kmetiji. Tako lahko spremljamo pot ovsa od zrna do končnega napitka.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><b>01</b><span>Njiva</span>
+        <p>Dober napitek se začne z dobrim ovsom. Oves pridelujemo tudi sami in dobro vemo, da se kakovost začne že na njivi. Za Slooves zato uporabljamo izključno slovenski oves.</p></div>
+      <div class="step"><b>02</b><span>Žetev</span>
+        <p>Ko oves dozori, pride čas žetve. Zrnje očistimo in pripravimo za predelavo.</p></div>
+      <div class="step"><b>03</b><span>Predelava</span>
+        <p>Tu smo imeli največ dela in največ učenja. Oves predelamo sami in iz njega naredimo napitek, za katerim stojimo.</p></div>
+      <div class="step"><b>04</b><span>Polnjenje</span>
+        <p>Pripravljen napitek napolnimo na kmetiji in ga pripravimo za pot do vas.</p></div>
+    </div>
+    <p class="closing">Od slovenskega ovsa do slovenskega ovsenega napitka.</p>
+  </div>
+</section>
+
+<section id="oves" class="band--green">
+  <div class="wrap narrow">
+    <p class="eyebrow">Poreklo</p>
+    <h2>Zakaj slovenski oves?</h2>
+    <p>Ker smo kmetija, smo želeli, da je tudi naš ovseni napitek narejen iz tega, kar raste pri nas. Oves je tradicionalna slovenska poljščina, ki je dobro prilagojena našim razmeram in je že dolgo del naših njiv.</p>
+    <p>Ko smo iskali surovino za naš napitek, zato nismo veliko razmišljali. In če lahko uporabimo slovenski oves, zakaj bi ga iskali drugje?</p>
+    <p>Pomembno nam je, da vemo, od kod prihaja oves, ki ga predelujemo, in da je njegova pot čim krajša. Krajša pot od njive do izdelka pomeni manj prevozov, hkrati pa s tem ostaja več dela in ustvarjene vrednosti doma ter večja kakovost surovine in s tem končnega produkta.</p>
+    <p>Ko se slovenski pridelek predela doma, se ohranjajo delo, znanje in priložnosti na podeželju. S tem pomagamo ohranjati tudi obdelano zemljo in krajino, ki je rezultat dela številnih generacij kmetov. Verjamemo, da ima lokalna pridelava največ smisla takrat, ko od nje nekaj ostane v okolju, kjer je nastala.</p>
+    <p>Zato bo Slooves vedno narejen iz 100 % slovenskega ovsa.</p>
+    <p>To je bila naša odločitev na začetku in tako želimo nadaljevati tudi v prihodnje. Ne glede na to, koliko napitka bomo nekoč naredili, bo njegov začetek vedno slovenska njiva.</p>
+  </div>
+</section>
+
+<section id="uporaba">
+  <div class="wrap">
+    <img class="accent" src="images/flowers.svg" alt="" role="presentation">
+    <p class="eyebrow">Uporaba</p>
+    <h2>Kako ga uporabiti</h2>
+    <div class="narrow">
+      <p class="lead">Kava? Seveda. Kosmiči? Tudi. Palačinke? Še kako.</p>
+      <p>Ni treba komplicirati. Slooves lahko dodate jutranji kavi, ga prelijete čez kosmiče ali z njim skuhate ovseno kašo. Prav pride tudi pri peki – za palačinke, mafine, pecivo in še marsikaj. In če vam ne diši nič od tega, ga preprosto nalijte v kozarec in popijte.</p>
+      <p>Nimate ideje, kaj z njim? Spremljajte nas na družbenih omrežjih – tam jih bo kmalu dovolj.</p>
+    </div>
+  </div>
+</section>
+
+<section id="kje">
+  <div class="wrap narrow">
+    <p class="eyebrow">Prodajna mesta</p>
+    <h2>Kje kupiti</h2>
+    <p class="lead">Še malo, pa bo Slooves na policah. 😊</p>
+    <p>Končni izdelek še pripravljamo in manjka nam res samo še nekaj zadnjih korakov. V naslednjih tednih ga bomo sproti dopolnjevali in dodajali nova mesta, kjer boste lahko našli Slooves.</p>
+    <p>Hvala za potrpežljivost!</p>
+  </div>
+</section>
+
+<section id="kontakt" class="band--green">
+  <div class="wrap narrow">
+    <p class="eyebrow">Pišite nam</p>
+    <h2>Kontakt</h2>
+    <p><a class="mail" href="mailto:info@slooves.si">info@slooves.si</a></p>
+
+    <ul class="social">
+      <li><a href="https://www.instagram.com/slo.oves/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="0.6" fill="currentColor" stroke="none"/></svg>
+        <span>Instagram</span></a></li>
+      <li><a href="https://www.facebook.com/p/Slooves-61595235655464/" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+        <span>Facebook</span></a></li>
+      <li><a href="https://www.tiktok.com/@slooves2" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        <span>TikTok</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p class="legal">
+    Proizvaja in polni: Jakob Globočnik - nosilec dopolnilne dejavnosti na kmetiji,
+    Letališka ulica 7, Voglje, 4208 Šenčur
+  </p>
+</footer>
+
+<div class="strip" data-ends="roze" role="presentation"></div>
+
+<script>
+(function () {
+  var strips = document.querySelectorAll('.strip');
+  var root = document.documentElement;
+
+  /* Fit the folk strip to the screen width. Motif blocks are fractions of the
+     tile width, measured from images/border.svg: x0 = where the block starts,
+     bw = its width. Each strip shows whole tiles plus one extra block, so it
+     starts and ends on the same motif. All strips share one height, chosen near
+     the target so both kinds get an even margin at each end; that margin is
+     covered by the ::before/::after caps. Heights are whole device pixels -
+     at fractional heights the two strips antialiased differently and one came
+     out visibly lighter. */
+  var BLOCKS = { listi: { x0: 0.5877, bw: 0.3861 }, roze: { x0: 0.0235, bw: 0.5227 } };
+  var PAD = 0.023;  // natural cream gap beside a block, in tile widths
+
+  function fitStrips() {
+    var dpr = window.devicePixelRatio || 1;
+    var W = root.clientWidth;
+    var target = W <= 480 ? 72 : W >= 1024 ? 100 : 72 + (W - 480) / 544 * 28;
+
+    function place(t, b) {
+      var n = Math.max(0, Math.floor(W / t - b.bw));
+      var m = (W - (n + b.bw) * t) / 2;
+      return { m: m, x: m - b.x0 * t, err: Math.abs(m - PAD * t) / t };
+    }
+
+    var best = null;
+    for (var h = Math.round(target * 0.7 * dpr) / dpr; h <= target * 1.3; h += 1 / dpr) {
+      var a = place(4 * h, BLOCKS.listi), b = place(4 * h, BLOCKS.roze);
+      var cost = Math.max(a.err, b.err) + Math.abs(h - target) / target * 0.5;
+      if (!best || cost < best.cost) best = { cost: cost, h: h, listi: a, roze: b };
+    }
+
+    root.style.setProperty('--strip-h', best.h + 'px');
+    for (var i = 0; i < strips.length; i++) {
+      var p = best[strips[i].getAttribute('data-ends')] || best.roze;
+      var x = Math.round(p.x * dpr) / dpr;
+      strips[i].style.backgroundPosition = '0 0, ' + x + 'px center';
+      strips[i].style.setProperty('--cap', Math.max(0, p.m - 0.5) + 'px');
+    }
+  }
+
+  /* If a strip starts on a fractional device pixel, the browser resamples it
+     at a different subpixel phase and its green reads lighter or darker than
+     the other strips - the thin rules in the artwork are well under one device
+     pixel, so they smear first. Nudge each strip down by the leftover fraction
+     so every one starts on a whole device pixel. */
+  function snap() {
+    var dpr = window.devicePixelRatio || 1;
+    for (var i = 0; i < strips.length; i++) {
+      var el = strips[i];
+      el.style.transform = '';
+      var top = el.getBoundingClientRect().top + window.scrollY;
+      var frac = (top * dpr) % 1;
+      if (frac) {
+        el.style.transform = 'translateY(' + ((1 - frac) / dpr).toFixed(4) + 'px)';
+      }
+    }
+  }
+
+  function layout() { fitStrips(); snap(); }
+
+  layout();
+  addEventListener('resize', layout);
+  // Web fonts change section heights when they swap in.
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(snap); }
+})();
+</script>
+
+</body>
+</html>

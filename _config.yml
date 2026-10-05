@@ -1,0 +1,6 @@
+# Only the website itself is published; repository notes stay in the repo.
+exclude:
+  - README.md
+  - CLAUDE.md
+  - tools
+  - _qr

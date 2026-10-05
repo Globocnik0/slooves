@@ -1,0 +1,6 @@
+_qr/
+*.zip
+*.bak
+.DS_Store
+Thumbs.db
+tools/
