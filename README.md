@@ -77,7 +77,7 @@ razlicno in zeleni odtenek izgleda razlicno - pri 34 px in `devicePixelRatio`
 1,25 je bil spodnji trak vidno svetlejsi. Skripta zato tudi vsak trak zamakne
 na celo zaslonsko piko.
 
-Barva podlage je bez s koncne embalaze (`#EED9B2`), ne svetla krem barva iz CGP.
+Naslovnica in noga sta v bez barvi koncne embalaze (`#EED9B2`), razdelki z daljsim besedilom pa v CGP barvi mering bela (`#FFF2E2`).
 
 ## Lokalni predogled
 
