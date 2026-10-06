@@ -239,9 +239,15 @@
     .use-head .deco-left { margin: 0 auto 1.25rem; }
     .use-head .qa { margin-bottom: 2rem; }
     .after { margin-top: 2.5rem; }
-    .social { flex-direction: column; align-items: center; }
-    .social a { width: 100%; max-width: 18.75rem; }
     footer img { width: 10.5rem; }
+  }
+
+  /* Social buttons stack once three of them no longer fit in a row. The list
+     items get the width, otherwise they shrink to their content. */
+  @media (max-width: 52rem) {
+    .social { flex-direction: column; align-items: center; }
+    .social li { width: 100%; max-width: 20rem; }
+    .social a { width: 100%; height: 3.5rem; font-size: 0.9375rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
