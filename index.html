@@ -116,8 +116,9 @@
   .bg-oat { background: var(--oat); color: var(--green-dark); }
   .bg-oat .eyebrow { color: var(--green-dark); }
 
-  /* Two columns on wide screens: a narrow one (heading, steps) and the text. */
-  .cols { display: grid; gap: 6rem; grid-template-columns: var(--side, 25rem) minmax(0, 1fr); align-items: start; }
+  /* Two columns on wide screens: a narrower one (heading, steps) and the text. */
+  .cols { display: grid; gap: clamp(3rem, 6vw, 6rem); align-items: start;
+          grid-template-columns: minmax(0, var(--side, 2fr)) minmax(0, 3fr); }
   .cols > .text { max-width: 40rem; }
 
   .deco { display: block; width: 7.5rem; height: auto; margin: 0 auto 1.5rem; }
@@ -219,7 +220,7 @@
              color: var(--olive-text); }
 
   /* ---------------- phone ---------------- */
-  @media (max-width: 52rem) {
+  @media (max-width: 60rem) {
     .cols { grid-template-columns: 1fr; gap: 0; }
     .cols.reverse > .text { order: -1; }
     .cols.reverse .steps { margin-top: 1.5rem; }
@@ -264,7 +265,7 @@
     <p class="eyebrow">Sestavine</p>
     <h2>Kaj je notri</h2>
     <div class="ing">
-      <div><b>Voda</b><span>in nič več</span></div>
+      <div><b>Voda</b><span>osnova napitka</span></div>
       <span class="plus" aria-hidden="true">+</span>
       <div><b>Oves</b><span>polnozrnati, slovenski</span></div>
       <span class="plus" aria-hidden="true">+</span>
@@ -292,7 +293,7 @@
     </div>
     <div class="text">
       <p>Smo družina Globočnik in naša kmetija je v družinski lasti že od leta 1929. Kmetovanje je del naše družine že več generacij, delo na kmetiji pa nam nikoli ni bilo samo služba, ampak način življenja.</p>
-      <p>Pred dobrimi tridesetimi leti sta kmetijo prevzela starša Aleš in Mili. Tudi sama sta vedno iskala načine, kako kmetijo ohraniti in ji zagotoviti prihodnost. Ena glavnih dejavnosti je bila dolga leta reja prašičev, v kateri pa nismo več videli prihodnosti.</p>
+      <p>Pred dobrimi tridesetimi leti sta kmetijo prevzela starša Aleš in Mili. Tudi sama sta vedno iskala načine, kako kmetijo ohraniti in jo razvijati. Ena glavnih dejavnosti je bila dolga leta reja prašičev, v kateri nismo več videli dolgoročne usmeritve.</p>
       <p>Takrat je na vrsto prišel sin Jakob. Že od nekdaj je vedel, da želi ostati doma na kmetiji. Ko smo iskali novo dejavnost, smo želeli najti nekaj, kar bi lahko razvijali doma, na dolgi rok, in pri tem ostali povezani s kmetijstvom.</p>
       <p>Tako smo prišli do ovsa in rastlinskih napitkov.</p>
       <p>Oves je domača, tradicionalna poljščina in hkrati odlična osnova za napitek, po katerem je povpraševanja vse več. Želeli smo narediti nekaj svojega – iz slovenskih surovin in na način, ki nam je blizu.</p>
@@ -308,7 +309,7 @@
       <p class="eyebrow">Postopek</p>
       <h2>Od njive do kozarca</h2>
     </div>
-    <div class="cols reverse" style="--side: 27.5rem">
+    <div class="cols reverse">
       <ol class="steps">
         <li class="step">
           <div class="rail"><span class="num">01</span><span class="line"></span></div>
@@ -342,7 +343,7 @@
 </section>
 
 <section id="uporaba" class="bg-cream">
-  <div class="wrap cols" style="--side: 35rem; align-items: center">
+  <div class="wrap cols" style="--side: 3fr; align-items: center">
     <div class="use-head">
       <img class="deco deco-left" src="images/flowers.svg" alt="">
       <p class="eyebrow">Uporaba</p>
