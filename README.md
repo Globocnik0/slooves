@@ -34,6 +34,7 @@ graficne podobe (CGP). Nic ni prerisano.
 | `mark.svg`, `mark-cream.svg` | znak (samo "O" z listom), uporabljen tudi kot favicon |
 | `border.svg` | okrasni trak, natanko ena ponovitev |
 | `flowers.svg`, `leaves.svg` | posamezna elementa traku |
+| `deljenje.png` | slika ob deljenju povezave (1200 x 630), izrisana iz naslovnice |
 | `badge-*.svg` | oznake izdelka (vegansko, brez laktoze, sladkorjev, dodatkov) |
 
 ### Barve
