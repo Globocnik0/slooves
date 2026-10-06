@@ -11,6 +11,7 @@ Pages, domena `slooves.si`.
 index.html                 naslovnica (enostranska stran)
 qr/index.html              cilj QR kode z embalaze -> preusmeri na naslovnico
 images/                    vektorska grafika blagovne znamke (glej spodaj)
+fonts/                     pisave Raleway in Archivo (woff2), streznik slooves.si
 favicon.svg                ikona
 robots.txt, sitemap.xml    za Google (Search Console)
 CLAUDE.md                  navodila za delo v repozitoriju
@@ -53,7 +54,9 @@ navedena.
 
 ### Tipografija
 
-Iz CGP, stran "tipografije in fonti". Oboje je na Google Fonts.
+Iz CGP, stran "tipografije in fonti". Obe pisavi sta odprtokodni (SIL OFL) in
+sta shranjeni v `fonts/`, zato stran ne nalaga nicesar z Googlovih streznikov.
+Pravila `@font-face` na vrhu `index.html` so enaka tistim, ki jih vrne Google Fonts.
 
 - **Raleway Extra Bold** - naslovi, vedno velike tiskane crke
 - **Raleway Semi Bold** - podnaslovi
