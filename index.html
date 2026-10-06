@@ -255,6 +255,18 @@
   .js .reveal { opacity: 0; transform: translateY(1.5rem); }
   .js .reveal.in { opacity: 1; transform: none; transition: opacity .7s ease-out, transform .7s ease-out; }
 
+  /* Path from field to glass: a step's circle fills and the line below it is
+     drawn once the circle rises above the middle of the screen; scrolling back
+     down below the middle empties it again. Transitions are switched on only
+     after the first frame, so a reload part-way down shows the right state. */
+  .steps-on .step .num { background: transparent; color: var(--green);
+                         box-shadow: inset 0 0 0 2px var(--green); }
+  .steps-on .step.on .num { background: var(--green); color: var(--cream); }
+  .steps-on .step .line { transform: scaleY(0); transform-origin: top; }
+  .steps-on .step.on .line { transform: scaleY(1); }
+  .steps-ready .step .num { transition: background-color .45s ease, color .45s ease; }
+  .steps-ready .step .line { transition: transform .8s ease-out .15s; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .js .reveal { opacity: 1; transform: none; }
@@ -476,6 +488,27 @@
 
   layout();
   addEventListener('resize', layout);
+
+  /* Steps follow the scroll position (see the CSS above). */
+  var steps = document.querySelectorAll('.step');
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (steps.length && !still) {
+    root.classList.add('steps-on');
+    var queued = false;
+    var updateSteps = function () {
+      queued = false;
+      var mid = window.innerHeight / 2;
+      for (var k = 0; k < steps.length; k++) {
+        var r = steps[k].querySelector('.num').getBoundingClientRect();
+        steps[k].classList.toggle('on', r.top + r.height / 2 < mid);
+      }
+    };
+    var queueSteps = function () { if (!queued) { queued = true; requestAnimationFrame(updateSteps); } };
+    updateSteps();
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('steps-ready'); }); });
+    addEventListener('scroll', queueSteps, { passive: true });
+    addEventListener('resize', queueSteps);
+  }
 
   /* Sections below the first screen glide in once, when they reach the screen. */
   var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
